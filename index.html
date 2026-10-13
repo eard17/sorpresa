@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <title>Aventuras de Aprendizaje | Ciencias e Inglés para Niños</title>
+  <!-- Google Fonts: Fredoka & Quicksand para un estilo infantil amigable y súper legible -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Quicksand:wght@500;700&family=Indie+Flower&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Canvas de Confeti para celebraciones -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- Barra Superior / Header Global -->
+  <header class="main-header">
+    <div class="header-content">
+      <button id="btn-home" class="header-btn home-btn" title="Volver al Inicio">
+        <span class="btn-icon">🏠</span>
+        <span class="btn-text">Inicio</span>
+      </button>
+
+      <div class="app-brand" id="brand-title">
+        <span class="brand-mascot">🌟</span>
+        <div class="brand-titles">
+          <h1 class="brand-name">Aventuras de Aprendizaje</h1>
+          <span class="brand-subtitle">Teacher ClassRoom • Preescolar & 5 Años</span>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <button id="btn-sound-toggle" class="header-btn sound-btn" title="Sonidos Activos">
+          <span id="sound-icon" class="btn-icon">🔊</span>
+        </button>
+        <button id="btn-fullscreen" class="header-btn fs-btn" title="Pantalla Completa">
+          <span class="btn-icon">⛶</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTENEDOR PRINCIPAL DE VISTAS -->
+  <main class="main-container">
+
+    <!-- ============================================== -->
+    <!-- VISTA 1: MENÚ PRINCIPAL (SELECCIÓN)            -->
+    <!-- ============================================== -->
+    <section id="view-menu" class="view-section active-view">
+      <div class="welcome-banner">
+        <div class="mascot-greeting">
+          <span class="big-emoji bounce-anim">🎒</span>
+          <div class="greeting-text">
+            <h2>¡Hola, pequeño campeón!</h2>
+            <p>¿Qué hermosa aventura vamos a explorar hoy? Toca una para empezar:</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="choice-cards-container">
+        <!-- Tarjeta Ciencias Naturales -->
+        <article class="adventure-card card-science" id="card-select-science">
+          <div class="card-badge">🌿 Explorador de la Naturaleza</div>
+          <div class="card-visual">
+            <div class="preview-collage">
+              <img src="assets/images/tree.jpg" alt="Árbol" class="mini-preview img-tree">
+              <img src="assets/images/bush.jpg" alt="Arbusto" class="mini-preview img-bush">
+              <img src="assets/images/herbs.jpg" alt="Hierba" class="mini-preview img-herbs">
+            </div>
+          </div>
+          <div class="card-info">
+            <h3 class="card-title">Ciencias Naturales</h3>
+            <p class="card-desc">¡Aprende sobre <strong>Árboles</strong>, <strong>Arbustos</strong> y <strong>Hierbas</strong>! Mira las fotos y practica transcribir en tu cuaderno escolar.</p>
+            <div class="card-tags">
+              <span class="tag">🌳 Árboles</span>
+              <span class="tag">🌿 Arbustos</span>
+              <span class="tag">🌱 Hierbas</span>
+            </div>
+            <button class="play-btn play-science" id="btn-start-science">
+              <span>¡Vamos a Explorar!</span>
+              <span class="btn-arrow">🚀</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- Tarjeta Inglés -->
+        <article class="adventure-card card-english" id="card-select-english">
+          <div class="card-badge">🔤 English Fun • Unit 8</div>
+          <div class="card-visual">
+            <div class="preview-collage english-collage">
+              <img src="assets/images/study.jpg" alt="Study" class="mini-preview img-study">
+              <img src="assets/images/read.jpg" alt="Read" class="mini-preview img-read">
+              <img src="assets/images/drink.jpg" alt="Drink" class="mini-preview img-drink">
+            </div>
+          </div>
+          <div class="card-info">
+            <h3 class="card-title">Inglés (English Words)</h3>
+            <p class="card-desc">Toca cada palabra para escuchar su pronunciación: <em>study, read, drink, eat, sleep</em>. ¡Y luego rétate hablando con el micrófono!</p>
+            <div class="card-tags">
+              <span class="tag">📚 study</span>
+              <span class="tag">📖 read</span>
+              <span class="tag">🥛 drink</span>
+              <span class="tag">🍎 eat</span>
+              <span class="tag">😴 sleep</span>
+            </div>
+            <button class="play-btn play-english" id="btn-start-english">
+              <span>¡Let's Learn English!</span>
+              <span class="btn-arrow">🌟</span>
+            </button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- VISTA 2: CIENCIAS NATURALES (TRANSCRIPCIÓN)    -->
+    <!-- ============================================== -->
+    <section id="view-science" class="view-section">
+      <div class="section-topbar">
+        <button class="back-pill-btn" id="btn-back-science">
+          <span>⬅️ Menú Principal</span>
+        </button>
+        <div class="section-heading">
+          <h2>🌿 Ciencias Naturales: Las Plantas</h2>
+          <span class="week-tag">Semana 07 - 11 Sep • Clasificación de las plantas</span>
+        </div>
+        <button class="action-pill-btn print-btn" id="btn-print-notebook" title="Imprimir hoja de trabajo">
+          <span>🖨️ Imprimir</span>
+        </button>
+      </div>
+
+      <!-- Selector de Plantas (Pestañas visuales) -->
+      <div class="plant-tabs-nav">
+        <button class="plant-tab-btn active" data-plant="tree">
+          <span class="tab-icon">🌳</span>
+          <span class="tab-name">1. Árboles</span>
+        </button>
+        <button class="plant-tab-btn" data-plant="bush">
+          <span class="tab-icon">🌿</span>
+          <span class="tab-name">2. Arbustos</span>
+        </button>
+        <button class="plant-tab-btn" data-plant="herbs">
+          <span class="tab-icon">🌱</span>
+          <span class="tab-name">3. Hierbas</span>
+        </button>
+        <button class="plant-tab-btn" data-plant="full">
+          <span class="tab-icon">📓</span>
+          <span class="tab-name">Cuaderno Completo</span>
+        </button>
+      </div>
+
+      <!-- Contenedor Principal de la Lección de Plantas -->
+      <div class="science-workspace">
+        
+        <!-- Ficha Visual de la Planta -->
+        <div class="plant-display-card">
+          <div class="plant-image-wrapper">
+            <img id="plant-image" src="assets/images/tree.jpg" alt="Imagen de la planta" class="plant-main-img">
+            <span class="plant-badge" id="plant-badge-text">🌳 Árboles</span>
+          </div>
+
+          <div class="plant-info-box">
+            <div class="plant-title-row">
+              <h3 id="plant-title">Árboles</h3>
+              <button class="speech-mini-btn" id="btn-speak-plant-text" title="Escuchar en voz alta">
+                <span>🔊 Escuchar</span>
+              </button>
+            </div>
+            
+            <div class="notebook-quote" id="plant-quote-box">
+              <p id="plant-description-text">
+                <strong>Árboles:</strong> Son plantas grandes con un tronco leñoso, grueso y duro que supera los 5 metros de altura (el pino, el roble).
+              </p>
+            </div>
+
+            <div class="plant-highlights" id="plant-highlights-box">
+              <div class="highlight-item">
+                <span class="hl-icon">📏</span>
+                <span class="hl-text" id="hl-size">Tamaño: Supera los 5 metros</span>
+              </div>
+              <div class="highlight-item">
+                <span class="hl-icon">🪵</span>
+                <span class="hl-text" id="hl-stem">Tallo: Tronco leñoso, grueso y duro</span>
+              </div>
+              <div class="highlight-item">
+                <span class="hl-icon">🌲</span>
+                <span class="hl-text" id="hl-examples">Ejemplos: El pino, el roble</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Zona Interactiva de Transcripción (Cuaderno Escolar) -->
+        <div class="transcription-zone">
+          <div class="transcription-header">
+            <div class="transcription-title">
+              <span class="pencil-icon">✏️</span>
+              <h4>Cuaderno de Transcripción</h4>
+            </div>
+            <div class="transcription-modes">
+              <span class="mode-label">Modo:</span>
+              <button class="mode-btn active" data-trans-mode="word">Palabra</button>
+              <button class="mode-btn" data-trans-mode="sentence">Frase</button>
+              <button class="mode-btn" data-trans-mode="full">Completo</button>
+            </div>
+          </div>
+
+          <!-- Cuaderno Escolar Digital Rayado -->
+          <div class="digital-notebook">
+            <div class="notebook-lines-container">
+              <!-- Renglón 1: Modelo a transcribir -->
+              <div class="notebook-row row-guide">
+                <span class="row-number">1</span>
+                <div class="row-content">
+                  <span class="label-guide">Texto modelo para transcribir:</span>
+                  <div class="guide-text" id="target-transcribe-text">Árboles</div>
+                </div>
+              </div>
+
+              <!-- Renglón 2: Espacio para escribir el niño -->
+              <div class="notebook-row row-input">
+                <span class="row-number">2</span>
+                <div class="row-content">
+                  <textarea id="child-transcribe-input" 
+                            class="notebook-textarea" 
+                            placeholder="Toca las letras del teclado abajo o escribe aquí..." 
+                            rows="2" 
+                            inputmode="none"
+                            autocomplete="off" 
+                            autocorrect="off" 
+                            autocapitalize="off" 
+                            spellcheck="false"></textarea>
+                </div>
+              </div>
+
+              <!-- Renglón 3: Visor de progreso en vivo letra por letra -->
+              <div class="notebook-row row-feedback">
+                <span class="row-number">3</span>
+                <div class="row-content live-eval-content">
+                  <span class="label-eval">Progreso en vivo:</span>
+                  <div class="letters-visual-track" id="letters-visual-track">
+                    <!-- Se llena dinámicamente con las letras -->
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Barra de Herramientas del Cuaderno -->
+            <div class="notebook-toolbar">
+              <div class="toolbar-stats">
+                <span class="stat-badge" id="transcribe-percent-badge">Progreso: 0%</span>
+                <span class="stat-stars" id="transcribe-stars">⭐⭐⭐</span>
+              </div>
+              <div class="toolbar-actions">
+                <button class="tool-btn btn-magic-help" id="btn-transcribe-help" title="Ayuda con la siguiente letra">
+                  <span>✨ Pista</span>
+                </button>
+                <button class="tool-btn btn-listen-help" id="btn-transcribe-listen" title="Escuchar qué escribir">
+                  <span>🔊 Leer</span>
+                </button>
+                <button class="tool-btn btn-clear-text" id="btn-transcribe-clear" title="Borrar y empezar de nuevo">
+                  <span>🧹 Borrar</span>
+                </button>
+                <button class="tool-btn btn-check-finish" id="btn-transcribe-check" title="Verificar resultado">
+                  <span>✅ ¡Terminé!</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Teclado en pantalla amigable para niños (Ideal para Tablets / Táctil) -->
+            <div class="kid-keyboard-panel">
+              <div class="keyboard-header">
+                <span class="kb-title">Teclado Amigable para Manitas Pequeñas 🖐️</span>
+                <div class="keyboard-header-actions">
+                  <button class="kb-toggle-btn" id="btn-toggle-inputmode" title="Cambiar a teclado nativo o táctil">📱 Teclado Sistema</button>
+                  <button class="kb-toggle-btn" id="btn-toggle-keyboard">Ocultar ⌨️</button>
+                </div>
+              </div>
+              <div class="kid-keyboard" id="kid-keyboard">
+                <!-- Se genera dinámicamente con teclas grandes y divertidas -->
+              </div>
+            </div>
+
+            <!-- Notificación de Éxito al Transcribir -->
+            <div class="transcribe-success-banner hidden" id="transcribe-success-banner">
+              <span class="big-star-anim">🌟</span>
+              <div class="success-banner-text">
+                <h5>¡EXTRAORDINARIO! ¡TRANSCRIBISTE PERFECTO!</h5>
+                <p>Has ganado una medalla de Gran Escritor 🏅</p>
+              </div>
+              <button class="next-plant-btn" id="btn-next-plant">
+                <span>Siguiente Planta ➡️</span>
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- VISTA 3: INGLÉS (ENGLISH ACTION WORDS)         -->
+    <!-- ============================================== -->
+    <section id="view-english" class="view-section">
+      <div class="section-topbar">
+        <button class="back-pill-btn" id="btn-back-english">
+          <span>⬅️ Menú Principal</span>
+        </button>
+        <div class="section-heading">
+          <h2>🔤 English Fun: Action Words</h2>
+          <span class="week-tag">Preschool Unit 8 • Lesson 4 • Page 123</span>
+        </div>
+        <div class="english-phase-pill" id="english-phase-pill">
+          <span>Modo: Repaso y Pronunciación</span>
+        </div>
+      </div>
+
+      <!-- FASE 1: REPASO Y PRONUNCIACIÓN AL TOCAR -->
+      <div id="english-review-stage" class="english-stage active-stage">
+        <div class="stage-instructions">
+          <span class="instruction-badge">💡 Toca la tarjeta o la palabra para escuchar cómo suena en inglés</span>
+          <div class="words-step-indicator" id="words-step-indicator">
+            <!-- Puntos de progreso 1 a 5 -->
+          </div>
+        </div>
+
+        <!-- Tarjeta Interactiva Gigante de la Palabra -->
+        <div class="flashcard-container">
+          <div class="flashcard" id="english-flashcard">
+            
+            <div class="flashcard-badge" id="card-step-badge">Palabra 1 de 5</div>
+            
+            <div class="flashcard-media">
+              <img id="english-word-img" src="assets/images/study.jpg" alt="Study" class="flashcard-img">
+              <button class="audio-pulse-btn" id="btn-speak-english-card" title="Toca para escuchar">
+                <span class="sound-wave-icon">🔊</span>
+                <span class="pulse-ring"></span>
+              </button>
+            </div>
+
+            <div class="flashcard-body">
+              <div class="word-primary-display" id="word-touch-area" title="Toca la palabra para escuchar">
+                <span class="english-main-word" id="card-english-word">study</span>
+                <span class="tap-hint">👆 Tócame para escuchar</span>
+              </div>
+
+              <div class="word-details">
+                <span class="phonetic-hint" id="card-phonetic-hint">/ ˈstʌdi /</span>
+                <span class="spanish-hint" id="card-spanish-hint">Significa: "Estudiar" 📚</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Botones de Navegación del Carrusel de Repaso -->
+        <div class="review-navigation-bar">
+          <button class="nav-arrow-btn" id="btn-prev-word" title="Palabra Anterior">
+            <span>⬅️ Anterior</span>
+          </button>
+          
+          <button class="repeat-listen-btn" id="btn-listen-again">
+            <span>🔊 Repetir Pronunciación</span>
+          </button>
+
+          <button class="nav-arrow-btn next-btn" id="btn-next-word" title="Siguiente Palabra">
+            <span>Siguiente ➡️</span>
+          </button>
+        </div>
+
+        <!-- Barra inferior con todas las 5 palabras para saltar rápido -->
+        <div class="word-selector-strip" id="word-selector-strip">
+          <!-- Botoncitos de las 5 palabras -->
+        </div>
+      </div>
+
+      <!-- FASE 2: RETO DE PRÁCTICA Y HABLAR CON MICRÓFONO -->
+      <div id="english-practice-stage" class="english-stage">
+        <div class="practice-header-card">
+          <div class="practice-title-area">
+            <span class="star-badge">🎤 ¡Tu Turno de Hablar!</span>
+            <h3>Reto de Pronunciación en Inglés</h3>
+            <p>Mira la palabra, presiona el micrófono y pronúnciala fuerte y claro.</p>
+          </div>
+          <div class="practice-score">
+            <span class="score-label">Aciertos:</span>
+            <span class="score-stars" id="practice-stars-count">0 / 5 ⭐</span>
+          </div>
+        </div>
+
+        <!-- Tarjeta de Práctica Activa -->
+        <div class="practice-card-box">
+          <div class="practice-visual">
+            <img id="practice-word-img" src="assets/images/study.jpg" alt="Study" class="practice-img">
+            <span class="practice-word-text" id="practice-target-word">study</span>
+            <span class="practice-translation" id="practice-translation">Significa: Estudiar</span>
+          </div>
+
+          <div class="practice-action-center">
+            
+            <!-- Botón Grande de Micrófono -->
+            <button class="big-mic-btn" id="btn-mic-record">
+              <div class="mic-inner">
+                <span class="mic-icon" id="mic-icon-state">🎙️</span>
+                <span class="mic-label" id="mic-label-state">Toca aquí y Di: "study"</span>
+              </div>
+              <div class="mic-pulse-rings" id="mic-pulse-rings"></div>
+            </button>
+
+            <!-- Estado de lo que se escuchó -->
+            <div class="listening-feedback-box" id="listening-feedback-box">
+              <span class="listening-hint" id="listening-hint">Presiona el botón para empezar a hablar...</span>
+              <div class="speech-result-preview" id="speech-result-preview"></div>
+            </div>
+
+            <!-- RESULTADO 1: VISTO BUENO ✅ -->
+            <div class="practice-result-card result-success hidden" id="practice-success-card">
+              <div class="result-badge-icon">✅</div>
+              <div class="result-message">
+                <h4>¡VISTO BUENO! ¡EXCELENTE!</h4>
+                <p>Pronunciaste perfecto: <strong class="word-success-highlight" id="success-word-highlight">study</strong> 🌟</p>
+              </div>
+              <button class="result-continue-btn" id="btn-practice-next">
+                <span>Siguiente Palabra ➡️</span>
+              </button>
+            </div>
+
+            <!-- RESULTADO 2: CORRECCIÓN INDICANDO LA PRONUNCIACIÓN ❌ -->
+            <div class="practice-result-card result-correction hidden" id="practice-correction-card">
+              <div class="result-badge-icon">🔄</div>
+              <div class="result-message">
+                <h4>¡Casi lo logras!</h4>
+                <p class="correction-notice">
+                  La palabra se pronuncia: <strong class="word-correct-sound" id="correction-word-target">STUDY</strong>
+                </p>
+                <p class="correction-tip">Escucha atentamente el audio e inténtalo otra vez.</p>
+              </div>
+              <div class="correction-actions">
+                <button class="correction-btn btn-listen-correction" id="btn-hear-correction">
+                  <span>🔊 Escuchar Cómo se Pronuncia</span>
+                </button>
+                <button class="correction-btn btn-retry-correction" id="btn-retry-mic">
+                  <span>🎤 Volver a Intentar</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Simulador de Práctica por si el navegador no tiene soporte de micrófono -->
+            <div class="browser-mic-fallback" id="mic-fallback-panel">
+              <details>
+                <summary>🛠️ Ayuda docente / Probar sin micrófono</summary>
+                <div class="fallback-tools">
+                  <p>Si tu navegador o dispositivo no tiene micrófono conectado, puedes validar con estos botones:</p>
+                  <button class="test-eval-btn btn-sim-correct" id="btn-sim-correct">Simular Pronunciación Correcta ✅</button>
+                  <button class="test-eval-btn btn-sim-wrong" id="btn-sim-wrong">Simular Pronunciación con Corrección ❌</button>
+                </div>
+              </details>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Barra de progreso del reto -->
+        <div class="practice-progress-dots" id="practice-dots-container"></div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ============================================== -->
+  <!-- MODAL DE PREGUNTA: ¿DESEA PRACTICAR?           -->
+  <!-- ============================================== -->
+  <div class="modal-backdrop hidden" id="modal-practice-confirm">
+    <div class="kid-modal-card bounce-in">
+      <div class="modal-mascot">🎉</div>
+      <h3 class="modal-title">¡Completaste todas las palabras!</h3>
+      <p class="modal-desc">
+        Ya repasaste las 5 palabras en inglés: <em>study, read, drink, eat, sleep</em>.
+        <br><br>
+        <strong>¿Deseas practicar la pronunciación con tu propia voz?</strong>
+      </p>
+
+      <div class="modal-buttons-row">
+        <!-- Si dice NO: Vuelve al ciclo de repaso -->
+        <button class="modal-btn btn-no-review" id="btn-modal-review-again">
+          <span class="m-icon">🔄</span>
+          <div class="m-text">
+            <strong>No, repasar otra vez</strong>
+            <small>Volver a escuchar las palabras</small>
+          </div>
+        </button>
+
+        <!-- Si dice SÍ: Va al reto de práctica -->
+        <button class="modal-btn btn-yes-practice" id="btn-modal-start-practice">
+          <span class="m-icon">🎤</span>
+          <div class="m-text">
+            <strong>¡Sí, quiero practicar!</strong>
+            <small>Rétate hablando en inglés</small>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL DE FELICITACIONES FINAL (TROFEO) -->
+  <div class="modal-backdrop hidden" id="modal-congrats-all">
+    <div class="kid-modal-card trophy-modal bounce-in">
+      <div class="modal-mascot trophy-spin">🏆</div>
+      <h3 class="modal-title">¡ERES UN CAMPEÓN DE INGLÉS!</h3>
+      <p class="modal-desc">
+        ¡Completaste todas las palabras con éxito! Pronunciaste excelente y aprendiste nuevas palabras hoy.
+      </p>
+      <div class="trophy-stars">⭐⭐⭐⭐⭐</div>
+      <div class="modal-buttons-row">
+        <button class="modal-btn btn-play-again" id="btn-trophy-replay">
+          <span class="m-icon">🔁</span>
+          <span>Jugar Otra Vez</span>
+        </button>
+        <button class="modal-btn btn-go-science" id="btn-trophy-science">
+          <span class="m-icon">🌿</span>
+          <span>Ir a Ciencias Naturales</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
